@@ -11,6 +11,26 @@ Running
 
 There are two projects, `MainWorks` and `MainFails`.  Each use Arrow in a trivial way.
 
+### MainWorks
+
+```Kotlin
+val a = Either.Left("left")
+val b = Either.Right(5)
+println(a)
+println(b)
+
+val c = Either.Left("one").fold({
+    println("Converting $it to two")
+    "two"
+}, {
+    "not used"
+})
+println(c)
+```
+
+This code uses `Either.Left`, `Either.Right`, and `Either.fold`, all which work and compile without
+issue.
+
 ```console
 $ bazel run //:MainWorks
 ...
@@ -19,6 +39,20 @@ Right(b=5)
 Converting one to two
 two
 ```
+
+### MainFails
+
+```Kotlin
+val a = Either.Right(5)
+val b = a.flatMap { Either.Right(it + 1) }
+println(a)
+println(b)
+```
+
+This code uses `Either.flatMap`, which is defined [here](https://github.com/arrow-kt/arrow/blob/0.7.1/modules/core/arrow-core/src/main/kotlin/arrow/core/Either.kt#L225),
+and documented [here](http://arrow-kt.io/docs/datatypes/either/#either-vs-validated).
+
+The compiler fails to find the method.
 
 ```console
 $ bazel run //:MainFails
@@ -44,39 +78,3 @@ MainFails.kt:7:38: error: unresolved reference: it
     val b = a.flatMap { Either.Right(it + 1) }
 ...
 ```
-
-MainWorks
----------
-
-```Kotlin
-val a = Either.Left("left")
-val b = Either.Right(5)
-println(a)
-println(b)
-
-val c = Either.Left("one").fold({
-    println("Converting $it to two")
-    "two"
-}, {
-    "not used"
-})
-println(c)
-```
-
-This code uses `Either.Left`, `Either.Right`, and `Either.fold`, all which work and compile without
-issue.
-
-MainFails
----------
-
-```Kotlin
-val a = Either.Right(5)
-val b = a.flatMap { Either.Right(it + 1) }
-println(a)
-println(b)
-```
-
-This code uses `Either.flatMap`, which is defined [here](https://github.com/arrow-kt/arrow/blob/0.7.1/modules/core/arrow-core/src/main/kotlin/arrow/core/Either.kt#L225),
-and documented [here](http://arrow-kt.io/docs/datatypes/either/#either-vs-validated).
-
-The compiler fails to find the method.
