@@ -78,3 +78,13 @@ MainFails.kt:7:38: error: unresolved reference: it
     val b = a.flatMap { Either.Right(it + 1) }
 ...
 ```
+
+Fix
+---
+
+We found a fix:
+
+For some reason, `Either.flatMap` is available via `import arrow.core.flatMap`.  I assume the other
+methods are available in the same way.
+
+See the latest commit for the change.
