@@ -1,0 +1,13 @@
+bazel-bin
+bazel-genfiles
+bazel-laniakea
+bazel-out
+bazel-testlogs
+*~
+.idea
+*.iml
+Thumbs.db
+.DS_Store
+.DS_Store?
+desktop.ini
+*.swp
