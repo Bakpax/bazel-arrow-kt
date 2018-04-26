@@ -1,6 +1,6 @@
 bazel-bin
 bazel-genfiles
-bazel-laniakea
+bazel-bazel-arrow-kt
 bazel-out
 bazel-testlogs
 *~
